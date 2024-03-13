@@ -1,17 +1,29 @@
-import { View } from 'react-native';
+// import Constants from 'expo-constants';
+import { View, ScrollView, StyleSheet } from 'react-native';
 
-import Category from '@/components/Category';
-import Header from '@/components/Header';
-import SlideImage from '@/components/SlideImage';
+import Category from '@/app/home/Category';
+import Header from '@/app/home/Header';
+import LateVol from '@/app/home/LateVol';
+import SlideImage from '@/app/home/SlideImage';
 
 export default function TabOneScreen(): React.ReactNode {
   return (
-    <View>
-      <Header />
+    <ScrollView style={styles.container}>
       <View>
-        <SlideImage />
-        <Category />
+        <Header />
+        <View>
+          <SlideImage />
+          <Category />
+          <LateVol />
+        </View>
       </View>
-    </View>
+    </ScrollView>
   );
 }
+const styles = StyleSheet.create({
+  container: {
+    // paddingTop: Constants.statusBarHeight,
+    // backgroundColor: 'black',
+    marginBottom: 20,
+  },
+});

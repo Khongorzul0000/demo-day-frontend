@@ -1,4 +1,4 @@
-const imageData = [
+const slidePic = [
   {
     url: 'https://i.pinimg.com/564x/cd/bb/fc/cdbbfc00e73504783e0afb3ee001b86a.jpg',
   },
@@ -12,4 +12,4 @@ const imageData = [
     url: 'https://i.pinimg.com/564x/43/1c/76/431c7675faf81c25fe25ddafc5cd195a.jpg',
   },
 ];
-export default imageData;
+export default slidePic;

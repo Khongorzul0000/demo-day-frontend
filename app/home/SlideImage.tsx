@@ -1,17 +1,21 @@
 import { FlatList, Image, StyleSheet, Text, View } from 'react-native';
 
-import imageData from '../assets/datas/image';
+import slidePic from '../../assets/datas/image';
 
 export default function TabSlideImageScreen(): React.ReactNode {
   return (
     <View style={styles.container}>
       <Text style={styles.heading}>Pictures</Text>
       <FlatList
-        data={imageData}
+        data={slidePic}
         horizontal
+        contentContainerStyle={{
+          flexGrow: 1,
+          gap: 10,
+        }}
         renderItem={({ item, index }) => {
           return (
-            <View style={{ marginRight: 15 }}>
+            <View>
               <Image source={{ uri: item.url }} style={styles.slide} />
             </View>
           );
