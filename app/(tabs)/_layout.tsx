@@ -22,7 +22,7 @@ const TabLayout: React.FC = () => {
         }}
       />
       <Tabs.Screen
-        name="two"
+        name="profile"
         options={{
           // title: 'Profile',
           tabBarIcon: ({ focused }) => {
