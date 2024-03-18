@@ -1,11 +1,16 @@
 import { FontAwesome } from '@expo/vector-icons';
+import { Link } from 'expo-router';
 import { StyleSheet, Text, View, TextInput, TouchableOpacity } from 'react-native';
 
 export default function TabHeaderScreen(): React.ReactNode {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Welcome!!!</Text>
-      <Text style={styles.text}>Read more about this app...</Text>
+      <Link href="/AboutPage" style={styles.text}>
+        Read more about this app...
+      </Link>
+      <Link href="/Login">login</Link>
+      <Link href="/Signup">signup</Link>
       <View style={{ flexDirection: 'row', gap: 20 }}>
         <TextInput
           placeholder="Search"
@@ -25,7 +30,8 @@ const styles = StyleSheet.create({
   container: {
     height: 180,
     width: '100%',
-    backgroundColor: '#7B68EE',
+    // backgroundColor: '#7B68EE',
+    backgroundColor: '#06C149',
     alignItems: 'flex-start',
     padding: 20,
     marginBottom: 10,

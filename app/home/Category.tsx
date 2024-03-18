@@ -31,7 +31,8 @@ const styles = StyleSheet.create({
     paddingRight: 20,
   },
   heading: {
-    color: '#7B68EE',
+    // color: '#7B68EE',
+    color: '#06C149',
     fontSize: 20,
     fontWeight: 'bold',
     marginBottom: 15,

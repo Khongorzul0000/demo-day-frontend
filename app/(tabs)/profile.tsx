@@ -1,5 +1,14 @@
 import { useRouter } from 'expo-router';
-import { StyleSheet, Text, View, Image, FlatList, TouchableOpacity, ScrollView } from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  View,
+  Image,
+  FlatList,
+  TouchableOpacity,
+  ScrollView,
+  ImageBackground,
+} from 'react-native';
 
 import slidePic from '@/assets/datas/image';
 
@@ -7,6 +16,13 @@ export default function TabTwoScreen(): React.ReactNode {
   const router = useRouter();
   return (
     <View style={styles.container}>
+      <ImageBackground
+        source={{
+          uri: 'https://i.pinimg.com/564x/56/78/e7/5678e7c892cb5699bdd0ca077a9586d1.jpg',
+        }}
+        style={{ position: 'relative', top: 100 }}>
+        <View style={{ height: 300 }} />
+      </ImageBackground>
       <View style={styles.main}>
         <View style={styles.round}>
           <Image
@@ -21,15 +37,23 @@ export default function TabTwoScreen(): React.ReactNode {
           <Text style={{ marginBottom: 20, marginTop: 5 }}>@bethbobmax@.gmail.com</Text>
           <ScrollView>
             <View style={{ alignItems: 'center' }}>
-              <Text style={{ width: 350 }}>
-                "Harry Potter" is a beloved fantasy book series by J.K. Rowling, following the
-                adventures of a young wizard named Harry and his friends as they attend Hogwarts
-                School of Witchcraft and Wizardry. The series spans seven books, exploring themes of
-                friendship, bravery, and the eternal struggle between good and evil in a magical
-                world filled with spells, creatures, and mysteries.
-              </Text>
+              <ScrollView style={{ maxHeight: 120, minWidth: 'auto' }}>
+                <Text style={{ width: 350 }}>
+                  "Harry Potter" is a beloved fantasy book series by J.K. Rowling, following the
+                  adventures of a young wizard named Harry and his friends as they attend Hogwarts
+                  School of Witchcraft and Wizardry. The series spans seven books, exploring themes
+                  of friendship, bravery, and the eternal struggle between good and evil in a
+                  magical world filled with spells, creatures, and mysteries. adventures of a young
+                  wizard named Harry and his friends as they attend Hogwarts School of Witchcraft
+                  and Wizardry. The series spans seven books, exploring themes of friendship,
+                  bravery, and the eternal struggle between good and evil in a magical world filled
+                  with spells, creatures, and mysteries.
+                </Text>
+              </ScrollView>
             </View>
-            <Text style={{ marginTop: 10, fontSize: 20, color: 'white', fontWeight: '600' }}>Duusgasan ajiluud</Text>
+            <Text style={{ marginTop: 10, fontSize: 20, color: 'white', fontWeight: '600' }}>
+              Duusgasan ajiluud
+            </Text>
             <View style={{ marginBottom: 30, marginTop: 15 }}>
               <FlatList
                 data={slidePic}
@@ -44,7 +68,6 @@ export default function TabTwoScreen(): React.ReactNode {
                       style={styles.card}
                       onPress={() => router.push('/detail/VolDetail')}>
                       <Text style={styles.title}>Lets clear onon river haahahahah</Text>
-                      {/* <Image source={{ uri: item.url }} style={styles.slide} /> */}
                       <View style={styles.slide}>
                         <Text>
                           Volfour бол сайн дурын нийгэмлэгийн зүрх сэтгэл бөгөөд Монгол даяарх сайн
@@ -69,14 +92,12 @@ export default function TabTwoScreen(): React.ReactNode {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
     justifyContent: 'flex-end',
-    // backgroundColor: '#7B68EE',
   },
   main: {
-    height: 600,
-    // backgroundColor: 'red',
-    backgroundColor: '#B3ACFF',
+    height: 585,
+    // backgroundColor: '#B3ACFF',
+    backgroundColor: '#5BE187',
     width: '100%',
     borderTopRightRadius: 60,
     borderTopLeftRadius: 60,
@@ -126,10 +147,12 @@ const styles = StyleSheet.create({
     marginTop: 5,
   },
   cate: {
-    color: '#7B68EE',
+    // backgroundColor: '#D4C4FF',
+    // color: '#7B68EE',
+    backgroundColor: '#A7FFAF',
+    color: '#06C149',
     fontWeight: '600',
     padding: 3,
-    backgroundColor: '#D4C4FF',
     borderRadius: 3,
     alignSelf: 'flex-start',
     paddingHorizontal: 7,
