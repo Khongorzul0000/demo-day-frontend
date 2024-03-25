@@ -1,4 +1,5 @@
 import { Feather, FontAwesome } from '@expo/vector-icons';
+import { Link } from 'expo-router';
 import { ImageBackground, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 
 export default function TabThreeScreen(): React.ReactNode {
@@ -40,7 +41,9 @@ export default function TabThreeScreen(): React.ReactNode {
         </View>
         <View style={{ flexDirection: 'row', gap: 5, marginTop: 20 }}>
           <Text style={{ color: 'white' }}>Don't have an account?</Text>
-          <Text style={{ color: '#06C149', fontWeight: '600' }}>Log in.</Text>
+          <Link href="/Signup" style={{ color: '#06C149', fontWeight: '600' }}>
+            Sign Up.
+          </Link>
         </View>
       </View>
     </ImageBackground>

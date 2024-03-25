@@ -25,6 +25,7 @@ const TabLayout: React.FC = () => {
         name="profile"
         options={{
           // title: 'Profile',
+          headerShown: false,
           tabBarIcon: ({ focused }) => {
             return (
               <View style={{ alignItems: 'center', justifyContent: 'center', marginTop: 17 }}>
@@ -66,6 +67,7 @@ const TabLayout: React.FC = () => {
         name="community"
         options={{
           // title: 'Profile',
+          headerShown: false,
           tabBarIcon: ({ focused }) => {
             return (
               <View style={{ alignItems: 'center', justifyContent: 'center', marginTop: 17 }}>

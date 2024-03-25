@@ -37,7 +37,7 @@ export default function TabTwoScreen(): React.ReactNode {
           <Text style={{ marginBottom: 20, marginTop: 5 }}>@bethbobmax@.gmail.com</Text>
           <ScrollView>
             <View style={{ alignItems: 'center' }}>
-              <ScrollView style={{ maxHeight: 120, minWidth: 'auto' }}>
+              <ScrollView style={{ maxHeight: 130, minWidth: 'auto' }}>
                 <Text style={{ width: 350 }}>
                   "Harry Potter" is a beloved fantasy book series by J.K. Rowling, following the
                   adventures of a young wizard named Harry and his friends as they attend Hogwarts
@@ -95,7 +95,7 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-end',
   },
   main: {
-    height: 585,
+    height: 617,
     // backgroundColor: '#B3ACFF',
     backgroundColor: '#5BE187',
     width: '100%',

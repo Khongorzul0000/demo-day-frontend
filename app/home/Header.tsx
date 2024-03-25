@@ -9,8 +9,8 @@ export default function TabHeaderScreen(): React.ReactNode {
       <Link href="/AboutPage" style={styles.text}>
         Read more about this app...
       </Link>
-      <Link href="/Login">login</Link>
-      <Link href="/Signup">signup</Link>
+      {/* <Link href="/Login">login</Link>
+      <Link href="/Signup">signup</Link> */}
       <View style={{ flexDirection: 'row', gap: 20 }}>
         <TextInput
           placeholder="Search"

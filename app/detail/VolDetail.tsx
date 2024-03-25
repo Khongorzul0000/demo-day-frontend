@@ -15,6 +15,7 @@ export default function TabVolunteersScreen(): React.ReactNode {
         <View style={{ flexDirection: 'row', alignItems: 'center', gap: 20 }}>
           <Text style={{ color: '#7B68EE', fontSize: 20, fontWeight: '600' }}>Kelly clarkson</Text>
           <Text style={styles.cate}>Cleaning</Text>
+          <Text style={styles.progress}>active</Text>
         </View>
         <View style={{ flexDirection: 'row', gap: 7 }}>
           <FontAwesome6 name="location-dot" size={25} color="#7B68EE" />
@@ -71,5 +72,16 @@ const styles = StyleSheet.create({
     width: '100%',
     marginTop: 20,
     marginBottom: 20,
+  },
+  progress: {
+    color: '#7B68EE',
+    // #06C149
+    fontWeight: '600',
+    padding: 3,
+    backgroundColor: '#A7FFAF',
+    borderRadius: 3,
+    alignSelf: 'flex-start',
+    paddingHorizontal: 7,
+    marginTop: 7,
   },
 });

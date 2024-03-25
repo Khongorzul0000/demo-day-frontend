@@ -1,7 +1,35 @@
-import { Feather, Fontisto, FontAwesome } from '@expo/vector-icons';
-import { ImageBackground, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { Feather, Fontisto, FontAwesome, AntDesign } from '@expo/vector-icons';
+import * as ImagePicker from 'expo-image-picker';
+import { Link } from 'expo-router';
+import { useState } from 'react';
+import {
+  ImageBackground,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+  Image,
+} from 'react-native';
 
 export default function TabThreeScreen(): React.ReactNode {
+  const [image, setImage] = useState('');
+
+  const pickImage = async () => {
+    const result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      aspect: [5, 4],
+      quality: 1,
+    });
+
+    console.log(result);
+
+    if (!result.canceled) {
+      setImage(result.assets[0].uri);
+    }
+  };
+
   return (
     <ImageBackground
       source={{ uri: 'https://i.pinimg.com/564x/b6/f2/97/b6f297465d0e25efb58d72bceab1e95d.jpg' }}
@@ -9,6 +37,15 @@ export default function TabThreeScreen(): React.ReactNode {
       <View style={styles.container}>
         <Text style={styles.header}>Register</Text>
         <Text style={{ marginBottom: 20, color: 'white' }}>Create your new account</Text>
+        {/* <Button title="choose img from gallery" onPress={pickImage} />
+        {image && <Image source={{ uri: image }} style={{ width: 200, height: 200 }} />} */}
+        <TouchableOpacity style={styles.profile} onPress={pickImage}>
+          {!image && <AntDesign name="plus" size={30} color="white" />}
+          {image && (
+            <Image source={{ uri: image }} style={{ width: 100, height: 100, borderRadius: 100 }} />
+          )}
+        </TouchableOpacity>
+
         <View style={styles.inputCol}>
           <Feather name="user" size={24} color="#9E9E9E" />
           <TextInput
@@ -49,7 +86,9 @@ export default function TabThreeScreen(): React.ReactNode {
         </View>
         <View style={{ flexDirection: 'row', gap: 5, marginTop: 20 }}>
           <Text style={{ color: 'white' }}>Already have an account?</Text>
-          <Text style={{ color: '#06C149', fontWeight: '600' }}>Log in.</Text>
+          <Link href="/Login" style={{ color: '#06C149', fontWeight: '600' }}>
+            Login.
+          </Link>
         </View>
       </View>
     </ImageBackground>
@@ -123,5 +162,14 @@ const styles = StyleSheet.create({
     marginTop: 20,
     marginRight: 35,
     marginLeft: 35,
+  },
+  profile: {
+    height: 100,
+    width: 100,
+    backgroundColor: '#35383F',
+    borderRadius: 100,
+    marginBottom: 20,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });
