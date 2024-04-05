@@ -1,3 +1,4 @@
+// import { useSignUp } from '@clerk/clerk-expo';
 import { Feather, Fontisto, FontAwesome, AntDesign } from '@expo/vector-icons';
 import * as ImagePicker from 'expo-image-picker';
 import { Link } from 'expo-router';
@@ -30,6 +31,27 @@ export default function TabThreeScreen(): React.ReactNode {
     }
   };
 
+  // const { isLoaded, signUp, setActive } = useSignUp();
+  // const [username, setUsername] = useState('');
+  // const [password, setPassword] = useState('');
+  // const router = useRouter();
+
+  // const onSignUpPress = async () => {
+  //   if (!isLoaded) {
+  //     return;
+  //   }
+  //   try {
+  //     const completeSignUp = await signUp.create({
+  //       username,
+  //       password,
+  //     });
+  //     await setActive({ session: completeSignUp.createdSessionId });
+  //     router.push('/(tabs)/');
+  //   } catch (err: unknown) {
+  //     console.error(JSON.stringify(err, null, 2));
+  //   }
+  // };
+
   return (
     <ImageBackground
       source={{ uri: 'https://i.pinimg.com/564x/b6/f2/97/b6f297465d0e25efb58d72bceab1e95d.jpg' }}
@@ -53,6 +75,8 @@ export default function TabThreeScreen(): React.ReactNode {
             autoCorrect
             placeholderTextColor="#9E9E9E"
             style={styles.input}
+            // onChangeText={(username) => setUsername(username)}
+            // value={username}
           />
         </View>
         <View style={styles.inputCol}>
@@ -71,9 +95,13 @@ export default function TabThreeScreen(): React.ReactNode {
             autoCorrect
             placeholderTextColor="#9E9E9E"
             style={styles.input}
+            // value={password}
+            // onChangeText={(password) => setPassword(password)}
           />
         </View>
-        <TouchableOpacity style={styles.button}>
+        <TouchableOpacity style={styles.button}
+          // onPress={onSignUpPress}
+        >
           <Text style={styles.buttonText}>Register</Text>
         </TouchableOpacity>
         <View style={styles.lineCon}>

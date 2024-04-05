@@ -1,8 +1,35 @@
+// import { useSignIn } from '@clerk/clerk-expo';
 import { Feather, FontAwesome } from '@expo/vector-icons';
-import { Link } from 'expo-router';
+import {
+  Link,
+  // useRouter
+} from 'expo-router';
+// import { useState } from 'react';
 import { ImageBackground, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 
 export default function TabThreeScreen(): React.ReactNode {
+  // const { signIn, setActive, isLoaded } = useSignIn();
+  // const router = useRouter();
+  // const [username, setUsername] = useState('');
+  // const [password, setPassword] = useState('');
+
+  // const onSignInPress = async () => {
+  //   if (!isLoaded) {
+  //     return;
+  //   }
+
+  //   try {
+  //     const signInResponse = await signIn.create({
+  //       identifier: username,
+  //       password,
+  //       strategy: 'password',
+  //     });
+  //     setActive({ session: signInResponse.createdSessionId });
+  //     router.push('/(tabs)/');
+  //   } catch (err: unknown) {
+  //     console.log(err);
+  //   }
+  // };
   return (
     <ImageBackground
       source={{ uri: 'https://i.pinimg.com/564x/b6/f2/97/b6f297465d0e25efb58d72bceab1e95d.jpg' }}
@@ -17,6 +44,8 @@ export default function TabThreeScreen(): React.ReactNode {
             autoCorrect
             placeholderTextColor="#9E9E9E"
             style={styles.input}
+            // onChangeText={(input) => setUsername(input)}
+            // value={username}
           />
         </View>
         <View style={styles.inputCol}>
@@ -26,9 +55,13 @@ export default function TabThreeScreen(): React.ReactNode {
             autoCorrect
             placeholderTextColor="#9E9E9E"
             style={styles.input}
+            // value={password}
+            // onChangeText={(input) => setPassword(input)}
           />
         </View>
-        <TouchableOpacity style={styles.button}>
+        <TouchableOpacity style={styles.button}
+          // onPress={onSignInPress}
+        >
           <Text style={styles.buttonText}>Log in</Text>
         </TouchableOpacity>
         <View style={styles.lineCon}>

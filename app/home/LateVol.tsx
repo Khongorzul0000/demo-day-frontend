@@ -1,9 +1,10 @@
 import { Link, useRouter } from 'expo-router';
 import { StyleSheet, Text, View, FlatList, TouchableOpacity } from 'react-native';
 
-import slidePic from '../../assets/datas/image';
+import { useGetVolunteersQuery } from '@/graphql/generated';
 
 export default function TabLateVolScreen(): React.ReactNode {
+  const { data, loading, error } = useGetVolunteersQuery();
   const router = useRouter();
   return (
     <View style={styles.container}>
@@ -13,8 +14,13 @@ export default function TabLateVolScreen(): React.ReactNode {
           View all
         </Link>
       </View>
+      <View>
+        {loading && <Text>Loading...</Text>}
+        {error && <Text>Error: {error.message}</Text>}
+        {/* {data?.getVolunteers?.map((vols) => <Text key={vols?.id}>{vols?.name}</Text>)} */}
+      </View>
       <FlatList
-        data={slidePic}
+        data={data?.getVolunteers ?? []}
         horizontal
         contentContainerStyle={{
           flexGrow: 1,
@@ -23,21 +29,33 @@ export default function TabLateVolScreen(): React.ReactNode {
         renderItem={({ item, index }) => {
           return (
             <TouchableOpacity style={styles.card} onPress={() => router.push('/detail/VolDetail')}>
-              <Text style={styles.title}>Lets clear onon river haahahahah</Text>
-              {/* <Image source={{ uri: item.url }} style={styles.slide} /> */}
+              <Text style={styles.title}>{item?.name}</Text>
               <View style={styles.slide}>
-                <Text>
-                  Volfour бол сайн дурын нийгэмлэгийн зүрх сэтгэл бөгөөд Монгол даяарх сайн дурын
-                  ажил хайгч болон ажил олгогчдод хүссэн үр дүнгийг нь өгөх, холбогдуулах хамгийн
-                  сайн эх сурвалж юм.
-                </Text>
+                <Text>{item?.description}</Text>
               </View>
               <Text style={styles.user}> Kelly clarkson</Text>
-              <Text style={styles.cate}>Cleaning</Text>
+              <Text style={styles.cate}>{item?.category}</Text>
             </TouchableOpacity>
           );
         }}
       />
+      {/* <FlatList
+        data={data?.getVolunteers ?? []}
+        horizontal
+        contentContainerStyle={{
+          flexGrow: 1,
+          gap: 10,
+        }}
+        renderItem={({ item, index }) => (
+          <TouchableOpacity style={styles.card} onPress={() => router.push(`/detail/${item.id}`)}>
+            <Text style={styles.title}>{item?.name}</Text>
+            <View style={styles.slide}>
+              <Text>{item?.description}</Text>
+            </View>
+          </TouchableOpacity>
+        )}
+        keyExtractor={(item) => item.id.toString()} 
+      /> */}
     </View>
   );
 }

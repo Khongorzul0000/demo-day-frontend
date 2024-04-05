@@ -1,0 +1,48 @@
+query GetVolunteers {
+  getVolunteers {
+    id
+    name
+    where
+    when
+    description
+    neededPeople
+    category
+    isDone
+    leader {
+      username
+      password
+      email
+      id
+    }
+    attendees {
+      username
+      password
+      email
+      id
+    }
+  }
+}
+query GetVolunteer($id: ID) {
+  getVolunteer(id: $id) {
+    id
+    name
+    where
+    when
+    description
+    neededPeople
+    category
+    isDone
+    leader {
+      username
+      password
+      email
+      id
+    }
+    attendees {
+      username
+      password
+      email
+      id
+    }
+  }
+}
