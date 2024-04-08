@@ -1,4 +1,4 @@
-import { useRouter } from 'expo-router';
+import { Link, useRouter } from 'expo-router';
 import {
   StyleSheet,
   Text,
@@ -11,9 +11,12 @@ import {
 } from 'react-native';
 
 import slidePic from '@/assets/datas/image';
+import { useUsers } from '@/hooks/useUsers';
 
 export default function TabTwoScreen(): React.ReactNode {
   const router = useRouter();
+  const user = useUsers((state) => state.user);
+
   return (
     <View style={styles.container}>
       <ImageBackground
@@ -27,13 +30,13 @@ export default function TabTwoScreen(): React.ReactNode {
         <View style={styles.round}>
           <Image
             source={{
-              uri: 'https://i.pinimg.com/564x/7f/4f/a7/7f4fa757ba9f722e242459ad2c04d116.jpg',
+              uri: 'https://i.pinimg.com/564x/56/78/e7/5678e7c892cb5699bdd0ca077a9586d1.jpg',
             }}
             style={styles.img}
           />
         </View>
         <View style={styles.content}>
-          <Text style={{ fontWeight: '600', fontSize: 17 }}>Max Beth Bob</Text>
+          <Text style={{ fontWeight: '600', fontSize: 17 }}>{user?.username}</Text>
           <Text style={{ marginBottom: 20, marginTop: 5 }}>@bethbobmax@.gmail.com</Text>
           <ScrollView>
             <View style={{ alignItems: 'center' }}>
@@ -54,6 +57,8 @@ export default function TabTwoScreen(): React.ReactNode {
             <Text style={{ marginTop: 10, fontSize: 20, color: 'white', fontWeight: '600' }}>
               Duusgasan ajiluud
             </Text>
+            <Link href="/Login">Login</Link>
+            <Link href="/Signup">Signup</Link>
             <View style={{ marginBottom: 30, marginTop: 15 }}>
               <FlatList
                 data={slidePic}

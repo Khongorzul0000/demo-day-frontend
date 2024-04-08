@@ -115,6 +115,7 @@ export type Volunteer = {
   category?: Maybe<Category>;
   description: Scalars['String']['output'];
   id: Scalars['ID']['output'];
+  img?: Maybe<Scalars['String']['output']>;
   isDone: Scalars['Boolean']['output'];
   leader?: Maybe<User>;
   name: Scalars['String']['output'];
@@ -126,6 +127,7 @@ export type Volunteer = {
 export type VolunteerCreateInput = {
   category: Category;
   description: Scalars['String']['input'];
+  img: Scalars['String']['input'];
   isDone: Scalars['Boolean']['input'];
   leaderId: Scalars['String']['input'];
   name: Scalars['String']['input'];
@@ -137,6 +139,7 @@ export type VolunteerCreateInput = {
 export type VolunteerUpdateInput = {
   category: Category;
   description: Scalars['String']['input'];
+  img: Scalars['String']['input'];
   isDone: Scalars['Boolean']['input'];
   name: Scalars['String']['input'];
   neededPeople: Scalars['String']['input'];
@@ -155,6 +158,27 @@ export type GetVolunteerQueryVariables = Exact<{
 
 
 export type GetVolunteerQuery = { __typename?: 'Query', getVolunteer?: { __typename?: 'Volunteer', id: string, name: string, where: string, when: string, description: string, neededPeople: string, category?: Category | null, isDone: boolean, leader?: { __typename?: 'User', username?: string | null, password?: string | null, email?: string | null, id?: string | null } | null, attendees?: Array<{ __typename?: 'User', username?: string | null, password?: string | null, email?: string | null, id?: string | null } | null> | null } | null };
+
+export type CreateVolunteerMutationVariables = Exact<{
+  input: VolunteerCreateInput;
+}>;
+
+
+export type CreateVolunteerMutation = { __typename?: 'Mutation', createVolunteer?: { __typename?: 'Volunteer', id: string, name: string, where: string, when: string, description: string, neededPeople: string, category?: Category | null, isDone: boolean, img?: string | null, leader?: { __typename?: 'User', username?: string | null, password?: string | null, email?: string | null, id?: string | null } | null, attendees?: Array<{ __typename?: 'User', username?: string | null, password?: string | null, email?: string | null, id?: string | null } | null> | null } | null };
+
+export type CreateUserMutationVariables = Exact<{
+  input: UserCreateInput;
+}>;
+
+
+export type CreateUserMutation = { __typename?: 'Mutation', createUser?: { __typename?: 'User', username?: string | null, password?: string | null, email?: string | null, id?: string | null } | null };
+
+export type MutationMutationVariables = Exact<{
+  input: UserSignInInput;
+}>;
+
+
+export type MutationMutation = { __typename?: 'Mutation', signInUser?: { __typename?: 'User', username?: string | null, password?: string | null, email?: string | null, id?: string | null } | null };
 
 
 export const GetVolunteersDocument = gql`
@@ -274,3 +298,128 @@ export type GetVolunteerQueryHookResult = ReturnType<typeof useGetVolunteerQuery
 export type GetVolunteerLazyQueryHookResult = ReturnType<typeof useGetVolunteerLazyQuery>;
 export type GetVolunteerSuspenseQueryHookResult = ReturnType<typeof useGetVolunteerSuspenseQuery>;
 export type GetVolunteerQueryResult = Apollo.QueryResult<GetVolunteerQuery, GetVolunteerQueryVariables>;
+export const CreateVolunteerDocument = gql`
+    mutation CreateVolunteer($input: VolunteerCreateInput!) {
+  createVolunteer(input: $input) {
+    id
+    name
+    where
+    when
+    description
+    neededPeople
+    category
+    isDone
+    leader {
+      username
+      password
+      email
+      id
+    }
+    attendees {
+      username
+      password
+      email
+      id
+    }
+    img
+  }
+}
+    `;
+export type CreateVolunteerMutationFn = Apollo.MutationFunction<CreateVolunteerMutation, CreateVolunteerMutationVariables>;
+
+/**
+ * __useCreateVolunteerMutation__
+ *
+ * To run a mutation, you first call `useCreateVolunteerMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateVolunteerMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createVolunteerMutation, { data, loading, error }] = useCreateVolunteerMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useCreateVolunteerMutation(baseOptions?: Apollo.MutationHookOptions<CreateVolunteerMutation, CreateVolunteerMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<CreateVolunteerMutation, CreateVolunteerMutationVariables>(CreateVolunteerDocument, options);
+      }
+export type CreateVolunteerMutationHookResult = ReturnType<typeof useCreateVolunteerMutation>;
+export type CreateVolunteerMutationResult = Apollo.MutationResult<CreateVolunteerMutation>;
+export type CreateVolunteerMutationOptions = Apollo.BaseMutationOptions<CreateVolunteerMutation, CreateVolunteerMutationVariables>;
+export const CreateUserDocument = gql`
+    mutation CreateUser($input: UserCreateInput!) {
+  createUser(input: $input) {
+    username
+    password
+    email
+    id
+  }
+}
+    `;
+export type CreateUserMutationFn = Apollo.MutationFunction<CreateUserMutation, CreateUserMutationVariables>;
+
+/**
+ * __useCreateUserMutation__
+ *
+ * To run a mutation, you first call `useCreateUserMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateUserMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createUserMutation, { data, loading, error }] = useCreateUserMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useCreateUserMutation(baseOptions?: Apollo.MutationHookOptions<CreateUserMutation, CreateUserMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<CreateUserMutation, CreateUserMutationVariables>(CreateUserDocument, options);
+      }
+export type CreateUserMutationHookResult = ReturnType<typeof useCreateUserMutation>;
+export type CreateUserMutationResult = Apollo.MutationResult<CreateUserMutation>;
+export type CreateUserMutationOptions = Apollo.BaseMutationOptions<CreateUserMutation, CreateUserMutationVariables>;
+export const MutationDocument = gql`
+    mutation Mutation($input: UserSignInInput!) {
+  signInUser(input: $input) {
+    username
+    password
+    email
+    id
+  }
+}
+    `;
+export type MutationMutationFn = Apollo.MutationFunction<MutationMutation, MutationMutationVariables>;
+
+/**
+ * __useMutationMutation__
+ *
+ * To run a mutation, you first call `useMutationMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useMutationMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [mutationMutation, { data, loading, error }] = useMutationMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useMutationMutation(baseOptions?: Apollo.MutationHookOptions<MutationMutation, MutationMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<MutationMutation, MutationMutationVariables>(MutationDocument, options);
+      }
+export type MutationMutationHookResult = ReturnType<typeof useMutationMutation>;
+export type MutationMutationResult = Apollo.MutationResult<MutationMutation>;
+export type MutationMutationOptions = Apollo.BaseMutationOptions<MutationMutation, MutationMutationVariables>;

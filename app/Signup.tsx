@@ -1,7 +1,6 @@
-// import { useSignUp } from '@clerk/clerk-expo';
-import { Feather, Fontisto, FontAwesome, AntDesign } from '@expo/vector-icons';
+import { Feather, Fontisto, AntDesign } from '@expo/vector-icons';
 import * as ImagePicker from 'expo-image-picker';
-import { Link } from 'expo-router';
+import { Link, useRouter } from 'expo-router';
 import { useState } from 'react';
 import {
   ImageBackground,
@@ -13,8 +12,14 @@ import {
   Image,
 } from 'react-native';
 
+import { useCreateUserMutation } from '@/graphql/generated';
+
 export default function TabThreeScreen(): React.ReactNode {
   const [image, setImage] = useState('');
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState('');
+  const router = useRouter();
 
   const pickImage = async () => {
     const result = await ImagePicker.launchImageLibraryAsync({
@@ -23,34 +28,33 @@ export default function TabThreeScreen(): React.ReactNode {
       aspect: [5, 4],
       quality: 1,
     });
-
     console.log(result);
 
     if (!result.canceled) {
       setImage(result.assets[0].uri);
     }
   };
-
-  // const { isLoaded, signUp, setActive } = useSignUp();
-  // const [username, setUsername] = useState('');
-  // const [password, setPassword] = useState('');
-  // const router = useRouter();
-
-  // const onSignUpPress = async () => {
-  //   if (!isLoaded) {
-  //     return;
-  //   }
-  //   try {
-  //     const completeSignUp = await signUp.create({
-  //       username,
-  //       password,
-  //     });
-  //     await setActive({ session: completeSignUp.createdSessionId });
-  //     router.push('/(tabs)/');
-  //   } catch (err: unknown) {
-  //     console.error(JSON.stringify(err, null, 2));
-  //   }
-  // };
+  const [createUserMutation, { loading: mutationLoading, error: mutationError }] =
+    useCreateUserMutation();
+  const handleCreateVolunteer = () => {
+    console.log('Creating user...');
+    createUserMutation({
+      variables: {
+        input: {
+          username,
+          password,
+          email,
+        },
+      },
+    })
+      .then(() => {
+        console.log('User created successfully!:');
+        router.push('/(tabs)/');
+      })
+      .catch((error) => {
+        console.error('Error creating user:', error);
+      });
+  };
 
   return (
     <ImageBackground
@@ -76,8 +80,13 @@ export default function TabThreeScreen(): React.ReactNode {
             placeholderTextColor="#9E9E9E"
             style={styles.input}
             // onChangeText={(username) => setUsername(username)}
-            // value={username}
+            onChangeText={(text) => setUsername(text)}
+            value={username}
           />
+        </View>
+        <View>
+          {mutationLoading && <Text style={styles.loading}>Loading...</Text>}
+          {mutationError && <Text>Error: {mutationError.message}</Text>}
         </View>
         <View style={styles.inputCol}>
           <Fontisto name="email" size={24} color="#9E9E9E" />
@@ -86,6 +95,8 @@ export default function TabThreeScreen(): React.ReactNode {
             autoCorrect
             placeholderTextColor="#9E9E9E"
             style={styles.input}
+            value={email}
+            onChangeText={(text) => setEmail(text)}
           />
         </View>
         <View style={styles.inputCol}>
@@ -95,23 +106,21 @@ export default function TabThreeScreen(): React.ReactNode {
             autoCorrect
             placeholderTextColor="#9E9E9E"
             style={styles.input}
-            // value={password}
-            // onChangeText={(password) => setPassword(password)}
+            value={password}
+            onChangeText={(text) => setPassword(text)}
           />
         </View>
-        <TouchableOpacity style={styles.button}
-          // onPress={onSignUpPress}
-        >
+        <TouchableOpacity style={styles.button} onPress={handleCreateVolunteer}>
           <Text style={styles.buttonText}>Register</Text>
         </TouchableOpacity>
-        <View style={styles.lineCon}>
+        {/* <View style={styles.lineCon}>
           <View style={styles.line} />
           <Text style={{ color: 'white' }}>or continue with</Text>
           <View style={styles.line} />
         </View>
         <View style={styles.cuba}>
           <FontAwesome name="google" size={40} color="#06C149" style={styles.icon} />
-        </View>
+        </View> */}
         <View style={{ flexDirection: 'row', gap: 5, marginTop: 20 }}>
           <Text style={{ color: 'white' }}>Already have an account?</Text>
           <Link href="/Login" style={{ color: '#06C149', fontWeight: '600' }}>
@@ -199,5 +208,9 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  loading: {
+    padding: 10,
+    backgroundColor: 'white',
   },
 });

@@ -17,10 +17,9 @@ export default function TabLateVolScreen(): React.ReactNode {
       <View>
         {loading && <Text>Loading...</Text>}
         {error && <Text>Error: {error.message}</Text>}
-        {/* {data?.getVolunteers?.map((vols) => <Text key={vols?.id}>{vols?.name}</Text>)} */}
       </View>
       <FlatList
-        data={data?.getVolunteers ?? []}
+        data={data?.getVolunteers?.slice(0, 3) ?? []}
         horizontal
         contentContainerStyle={{
           flexGrow: 1,

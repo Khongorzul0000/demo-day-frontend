@@ -2,34 +2,43 @@
 import { Feather, FontAwesome } from '@expo/vector-icons';
 import {
   Link,
+  useRouter,
   // useRouter
 } from 'expo-router';
+import { useState } from 'react';
 // import { useState } from 'react';
 import { ImageBackground, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 
+import { useMutationMutation } from '@/graphql/generated';
+
 export default function TabThreeScreen(): React.ReactNode {
-  // const { signIn, setActive, isLoaded } = useSignIn();
-  // const router = useRouter();
-  // const [username, setUsername] = useState('');
-  // const [password, setPassword] = useState('');
-
-  // const onSignInPress = async () => {
-  //   if (!isLoaded) {
-  //     return;
-  //   }
-
-  //   try {
-  //     const signInResponse = await signIn.create({
-  //       identifier: username,
-  //       password,
-  //       strategy: 'password',
-  //     });
-  //     setActive({ session: signInResponse.createdSessionId });
-  //     router.push('/(tabs)/');
-  //   } catch (err: unknown) {
-  //     console.log(err);
-  //   }
-  // };
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const router = useRouter();
+  const [loginUserMutation, { loading: mutationLoading }] = useMutationMutation();
+  const handleLoginUser = () => {
+    console.log('login user...');
+    loginUserMutation({
+      variables: {
+        input: {
+          password,
+          username,
+        },
+      },
+    })
+      .then(() => {
+        console.log('loged in');
+        router.push('/(tabs)/');
+      })
+      .catch((error) => {
+        console.log('error logging in:', error);
+        setErrorMessage('An error occurred. Please try again.');
+        setTimeout(() => {
+          setErrorMessage(null);
+        }, 3000);
+      });
+  };
   return (
     <ImageBackground
       source={{ uri: 'https://i.pinimg.com/564x/b6/f2/97/b6f297465d0e25efb58d72bceab1e95d.jpg' }}
@@ -44,9 +53,13 @@ export default function TabThreeScreen(): React.ReactNode {
             autoCorrect
             placeholderTextColor="#9E9E9E"
             style={styles.input}
-            // onChangeText={(input) => setUsername(input)}
-            // value={username}
+            onChangeText={(text) => setUsername(text)}
+            value={username}
           />
+        </View>
+        <View>
+          {mutationLoading && <Text style={styles.loading}>Loading...</Text>}
+          {errorMessage !== null && <Text style={{ color: 'red' }}>{errorMessage}</Text>}
         </View>
         <View style={styles.inputCol}>
           <Feather name="lock" size={24} color="#9E9E9E" />
@@ -55,13 +68,11 @@ export default function TabThreeScreen(): React.ReactNode {
             autoCorrect
             placeholderTextColor="#9E9E9E"
             style={styles.input}
-            // value={password}
-            // onChangeText={(input) => setPassword(input)}
+            value={password}
+            onChangeText={(text) => setPassword(text)}
           />
         </View>
-        <TouchableOpacity style={styles.button}
-          // onPress={onSignInPress}
-        >
+        <TouchableOpacity style={styles.button} onPress={handleLoginUser}>
           <Text style={styles.buttonText}>Log in</Text>
         </TouchableOpacity>
         <View style={styles.lineCon}>
@@ -150,5 +161,9 @@ const styles = StyleSheet.create({
     marginTop: 20,
     marginRight: 35,
     marginLeft: 35,
+  },
+  loading: {
+    padding: 10,
+    backgroundColor: 'white',
   },
 });

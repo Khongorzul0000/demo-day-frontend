@@ -46,3 +46,44 @@ query GetVolunteer($id: ID) {
     }
   }
 }
+mutation CreateVolunteer($input: VolunteerCreateInput!) {
+  createVolunteer(input: $input) {
+    id
+    name
+    where
+    when
+    description
+    neededPeople
+    category
+    isDone
+    leader {
+      username
+      password
+      email
+      id
+    }
+    attendees {
+      username
+      password
+      email
+      id
+    }
+    img
+  }
+}
+mutation CreateUser($input: UserCreateInput!) {
+  createUser(input: $input) {
+    username
+    password
+    email
+    id
+  }
+}
+mutation Mutation($input: UserSignInInput!) {
+  signInUser(input: $input) {
+    username
+    password
+    email
+    id
+  }
+}

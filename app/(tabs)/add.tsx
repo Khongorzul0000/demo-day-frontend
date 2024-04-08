@@ -5,6 +5,7 @@ import { SelectList } from 'react-native-dropdown-select-list';
 export default function TabThreeScreen(): React.ReactNode {
   const [, setSelected] = useState('');
 
+
   const data = [
     { key: '1', value: 'Mobiles', disabled: true },
     { key: '2', value: 'Appliances' },
@@ -19,18 +20,18 @@ export default function TabThreeScreen(): React.ReactNode {
       <TextInput placeholder="Сайн дурын ажилын нэр" autoCorrect style={styles.input} />
       <TextInput placeholder="Хаана болох" autoCorrect style={styles.input} />
       <TextInput placeholder="Хэзээ болох" autoCorrect style={styles.input} />
-      <View style={{ flexDirection: 'row' }}>
+      <View style={{ flexDirection: 'row', alignItems: 'center' }}>
         <TextInput
           placeholder="Хүний тоо"
           autoCorrect
           keyboardType="numeric"
-          style={styles.input1}
+          style={[styles.input1, { marginRight: 10 }]} // Add marginRight for spacing
         />
         <SelectList
           setSelected={(value: SetStateAction<string>) => setSelected(value)}
           data={data}
           save="value"
-          placeholder="Төрлийг сонгох.   " // Custom placeholder text
+          placeholder="Төрлийг сонгох."
         />
       </View>
       <TextInput

@@ -6,8 +6,8 @@
     "start": "expo start",
     "prestart": "bun run codegen",
     "codegen": "bunx graphql-codegen --config ./graphql/codegen.ts",
-    "android": "expo start --android",
-    "ios": "expo start --ios",
+    "android": "expo run:android",
+    "ios": "expo run:ios",
     "web": "expo start --web",
     "test": "jest --watchAll",
     "lint": "eslint .",
@@ -38,10 +38,12 @@
     "react-dom": "18.2.0",
     "react-native": "0.73.4",
     "react-native-dropdown-select-list": "^2.0.5",
+    "react-native-loader-kit": "^2.0.8",
     "react-native-loading-spinner-overlay": "^3.0.1",
     "react-native-safe-area-context": "4.8.2",
     "react-native-screens": "~3.29.0",
-    "react-native-web": "~0.19.6"
+    "react-native-web": "~0.19.6",
+    "zustand": "^4.5.2"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
