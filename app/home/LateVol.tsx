@@ -19,42 +19,28 @@ export default function TabLateVolScreen(): React.ReactNode {
         {error && <Text>Error: {error.message}</Text>}
       </View>
       <FlatList
-        data={data?.getVolunteers?.slice(0, 3) ?? []}
+        data={[...(data?.getVolunteers ?? [])]}
         horizontal
         contentContainerStyle={{
           flexGrow: 1,
           gap: 10,
+          flexDirection: 'row-reverse',
         }}
         renderItem={({ item, index }) => {
           return (
-            <TouchableOpacity style={styles.card} onPress={() => router.push('/detail/VolDetail')}>
+            <TouchableOpacity
+              style={styles.card}
+              onPress={() => router.push(`/detail/${item?.id}`)}>
               <Text style={styles.title}>{item?.name}</Text>
               <View style={styles.slide}>
                 <Text>{item?.description}</Text>
               </View>
-              <Text style={styles.user}> Kelly clarkson</Text>
+              <Text style={styles.user}>{item?.leader?.username}</Text>
               <Text style={styles.cate}>{item?.category}</Text>
             </TouchableOpacity>
           );
         }}
       />
-      {/* <FlatList
-        data={data?.getVolunteers ?? []}
-        horizontal
-        contentContainerStyle={{
-          flexGrow: 1,
-          gap: 10,
-        }}
-        renderItem={({ item, index }) => (
-          <TouchableOpacity style={styles.card} onPress={() => router.push(`/detail/${item.id}`)}>
-            <Text style={styles.title}>{item?.name}</Text>
-            <View style={styles.slide}>
-              <Text>{item?.description}</Text>
-            </View>
-          </TouchableOpacity>
-        )}
-        keyExtractor={(item) => item.id.toString()} 
-      /> */}
     </View>
   );
 }

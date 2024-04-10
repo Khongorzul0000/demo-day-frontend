@@ -1,4 +1,4 @@
-import { Link, useRouter } from 'expo-router';
+import { useRouter } from 'expo-router';
 import {
   StyleSheet,
   Text,
@@ -15,7 +15,7 @@ import { useUsers } from '@/hooks/useUsers';
 
 export default function TabTwoScreen(): React.ReactNode {
   const router = useRouter();
-  const user = useUsers((state) => state.user);
+  const { user } = useUsers();
 
   return (
     <View style={styles.container}>
@@ -37,7 +37,7 @@ export default function TabTwoScreen(): React.ReactNode {
         </View>
         <View style={styles.content}>
           <Text style={{ fontWeight: '600', fontSize: 17 }}>{user?.username}</Text>
-          <Text style={{ marginBottom: 20, marginTop: 5 }}>@bethbobmax@.gmail.com</Text>
+          <Text style={{ marginBottom: 20, marginTop: 5 }}>{user?.email}</Text>
           <ScrollView>
             <View style={{ alignItems: 'center' }}>
               <ScrollView style={{ maxHeight: 130, minWidth: 'auto' }}>
@@ -57,8 +57,8 @@ export default function TabTwoScreen(): React.ReactNode {
             <Text style={{ marginTop: 10, fontSize: 20, color: 'white', fontWeight: '600' }}>
               Duusgasan ajiluud
             </Text>
-            <Link href="/Login">Login</Link>
-            <Link href="/Signup">Signup</Link>
+            {/* <Link href="/Login">Login</Link>
+            <Link href="/Signup">Signup</Link> */}
             <View style={{ marginBottom: 30, marginTop: 15 }}>
               <FlatList
                 data={slidePic}

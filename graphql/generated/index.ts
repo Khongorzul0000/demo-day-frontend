@@ -125,9 +125,9 @@ export type Volunteer = {
 };
 
 export type VolunteerCreateInput = {
-  category: Category;
+  category?: InputMaybe<Category>;
   description: Scalars['String']['input'];
-  img: Scalars['String']['input'];
+  img?: InputMaybe<Scalars['String']['input']>;
   isDone: Scalars['Boolean']['input'];
   leaderId: Scalars['String']['input'];
   name: Scalars['String']['input'];

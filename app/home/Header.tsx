@@ -2,10 +2,13 @@ import { FontAwesome } from '@expo/vector-icons';
 import { Link } from 'expo-router';
 import { StyleSheet, Text, View, TextInput, TouchableOpacity } from 'react-native';
 
+import { useUsers } from '@/hooks/useUsers';
+
 export default function TabHeaderScreen(): React.ReactNode {
+  const { user } = useUsers();
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Welcome!!!</Text>
+      <Text style={styles.title}>Welcome!!!. {user?.username} !!!</Text>
       <Link href="/AboutPage" style={styles.text}>
         Read more about this app...
       </Link>
@@ -13,7 +16,7 @@ export default function TabHeaderScreen(): React.ReactNode {
       <Link href="/Signup">signup</Link> */}
       <View style={{ flexDirection: 'row', gap: 20 }}>
         <TextInput
-          placeholder="Search"
+          placeholder="Nereer ni haih"
           autoCorrect
           placeholderTextColor="#9E9E9E"
           style={styles.input}

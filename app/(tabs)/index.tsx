@@ -1,11 +1,9 @@
-// import Constants from 'expo-constants';
 import { View, ScrollView, StyleSheet } from 'react-native';
 
 import Category from '@/app/home/Category';
 import Header from '@/app/home/Header';
 import LateVol from '@/app/home/LateVol';
 import SlideImage from '@/app/home/SlideImage';
-
 export default function TabOneScreen(): React.ReactNode {
   return (
     <ScrollView style={styles.container}>

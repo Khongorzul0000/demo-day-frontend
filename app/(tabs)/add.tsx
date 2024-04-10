@@ -1,45 +1,139 @@
-import { SetStateAction, useState } from 'react';
-import { StyleSheet, TextInput, View } from 'react-native';
+// import { AntDesign } from '@expo/vector-icons';
+// import * as ImagePicker from 'expo-image-picker';
+import { useEffect, useState } from 'react';
+import { StyleSheet, TextInput, TouchableOpacity, View, Text } from 'react-native';
 import { SelectList } from 'react-native-dropdown-select-list';
 
+import { Category, useCreateVolunteerMutation } from '@/graphql/generated';
+import { useUsers } from '@/hooks/useUsers';
+
 export default function TabThreeScreen(): React.ReactNode {
-  const [, setSelected] = useState('');
+  const [name, setName] = useState('');
+  const [when, setWhen] = useState('');
+  const [where, setWhere] = useState('');
+  const [description, setDescription] = useState('');
+  const [neededPeople, setNeededPeople] = useState('');
+  const [category, setCategory] = useState<Category | undefined>(undefined);
+  const [img, setImg] = useState('');
+  const [isDone, setIsDone] = useState(false);
+  const { user } = useUsers();
+  const [createVolunteer, { loading: mutationLoading }] = useCreateVolunteerMutation();
+  const handleCreate = () => {
+    console.log('createingvolunteer');
+    const categoryValue = category?.toUpperCase();
+    createVolunteer({
+      variables: {
+        input: {
+          name,
+          when,
+          where,
+          description,
+          neededPeople,
+          img,
+          category: categoryValue as Category,
+          isDone,
+          leaderId: `${user?.id}`,
+        },
+      },
+      onCompleted: (data) => {
+        console.log('Volunteer created successfully!');
+        // refresh();
+      },
+      onError: (error) => {
+        console.error('Error creating volunteer:', error);
+      },
+    });
+    // const refresh = () => {
+    //   console.log('Refreshing data...');
+    //   refresh();
+    // };
+  };
+  useEffect(() => {
+    setIsDone((prevIsDone) => !prevIsDone); // Toggle the value of isDone
+  }, []);
 
+  // const pickImage = async () => {
+  //   const result = await ImagePicker.launchImageLibraryAsync({
+  //     mediaTypes: ImagePicker.MediaTypeOptions.All,
+  //     allowsEditing: true,
+  //     aspect: [5, 4],
+  //     quality: 1,
+  //   });
+  //   console.log(result);
 
-  const data = [
-    { key: '1', value: 'Mobiles', disabled: true },
-    { key: '2', value: 'Appliances' },
-    { key: '3', value: 'Cameras' },
-    { key: '4', value: 'Computers', disabled: true },
-    { key: '5', value: 'Vegetables' },
-    { key: '6', value: 'Diary Products' },
-    { key: '7', value: 'Drinks' },
-  ];
+  //   if (!result.canceled) {
+  //     setImg(result.assets[0].uri);
+  //   }
+  // };
   return (
     <View style={styles.container}>
-      <TextInput placeholder="Сайн дурын ажилын нэр" autoCorrect style={styles.input} />
-      <TextInput placeholder="Хаана болох" autoCorrect style={styles.input} />
-      <TextInput placeholder="Хэзээ болох" autoCorrect style={styles.input} />
+      <TextInput
+        placeholder="Сайн дурын ажилын нэр"
+        autoCorrect
+        style={styles.input}
+        value={name}
+        onChangeText={(text) => setName(text)}
+      />
+      <TextInput
+        placeholder="Хаана болох"
+        autoCorrect
+        style={styles.input}
+        value={where}
+        onChangeText={(text) => setWhere(text)}
+      />
+      <TextInput
+        placeholder="Хэзээ болох"
+        autoCorrect
+        style={styles.input}
+        value={when}
+        onChangeText={(text) => setWhen(text)}
+      />
       <View style={{ flexDirection: 'row', alignItems: 'center' }}>
         <TextInput
           placeholder="Хүний тоо"
           autoCorrect
           keyboardType="numeric"
-          style={[styles.input1, { marginRight: 10 }]} // Add marginRight for spacing
+          style={[styles.input1, { marginRight: 10 }]}
+          value={neededPeople}
+          onChangeText={(text) => setNeededPeople(text)}
         />
         <SelectList
-          setSelected={(value: SetStateAction<string>) => setSelected(value)}
-          data={data}
+          setSelected={(value: Category | undefined) => setCategory(value)}
+          data={[
+            { key: '1', value: 'STUDY_HELP' },
+            { key: '2', value: 'CLEANING' },
+            { key: '3', value: 'ANIMAL' },
+            { key: '4', value: 'NATURE' },
+          ]}
           save="value"
           placeholder="Төрлийг сонгох."
         />
       </View>
+      {mutationLoading && <Text>Loading...</Text>}
       <TextInput
         style={styles.textInput}
         multiline
         numberOfLines={4} // Set the number of lines you want to display initially
         placeholder="Сайн дурын ажилын дэлгэрэнгүй"
+        value={description}
+        onChangeText={(text) => setDescription(text)}
       />
+      {/* <TouchableOpacity onPress={pickImage}>
+        {!img && <AntDesign name="plus" size={30} color="white" />}
+        {img && (
+          <Image source={{ uri: img }} style={{ width: 100, height: 100, borderRadius: 100 }} />
+        )}
+      </TouchableOpacity> */}
+      <TextInput
+        placeholder="Zurag"
+        autoCorrect
+        style={styles.input}
+        value={img}
+        onChangeText={(text) => setImg(text)}
+      />
+      <TouchableOpacity onPress={handleCreate}>
+        <Text>add</Text>
+      </TouchableOpacity>
     </View>
   );
 }

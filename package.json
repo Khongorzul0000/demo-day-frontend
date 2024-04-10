@@ -22,6 +22,7 @@
     "@apollo/client": "^3.9.10",
     "@clerk/clerk-expo": "^0.20.11",
     "@expo/vector-icons": "^14.0.0",
+    "@react-native-async-storage/async-storage": "^1.23.1",
     "@react-navigation/native": "^6.0.2",
     "codegen": "^0.1.0",
     "expo": "~50.0.7",

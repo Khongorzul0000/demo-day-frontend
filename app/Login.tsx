@@ -10,6 +10,7 @@ import { useState } from 'react';
 import { ImageBackground, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 
 import { useMutationMutation } from '@/graphql/generated';
+import { useUsers } from '@/hooks/useUsers';
 
 export default function TabThreeScreen(): React.ReactNode {
   const [username, setUsername] = useState('');
@@ -17,6 +18,7 @@ export default function TabThreeScreen(): React.ReactNode {
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const router = useRouter();
   const [loginUserMutation, { loading: mutationLoading }] = useMutationMutation();
+  const setUser = useUsers((state) => state.setUser);
   const handleLoginUser = () => {
     console.log('login user...');
     loginUserMutation({
@@ -27,9 +29,22 @@ export default function TabThreeScreen(): React.ReactNode {
         },
       },
     })
-      .then(() => {
-        console.log('loged in');
-        router.push('/(tabs)/');
+      // .then(() => {
+      //   console.log('loged in');
+      //   router.push('/(tabs)/');
+      // })
+      .then((result) => {
+        const userData = result.data?.signInUser;
+        // setUser(userData);
+        if (userData) {
+          setUser(userData);
+          console.log('loged in');
+          router.push('/(tabs)/');
+        } else {
+          console.error('User data is null or undefined');
+        }
+        // console.log('loged in');
+        // router.push('/(tabs)/');
       })
       .catch((error) => {
         console.log('error logging in:', error);
