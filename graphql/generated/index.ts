@@ -180,6 +180,13 @@ export type MutationMutationVariables = Exact<{
 
 export type MutationMutation = { __typename?: 'Mutation', signInUser?: { __typename?: 'User', username?: string | null, password?: string | null, email?: string | null, id?: string | null } | null };
 
+export type GetVolunteersByCategoryQueryVariables = Exact<{
+  category: Category;
+}>;
+
+
+export type GetVolunteersByCategoryQuery = { __typename?: 'Query', getVolunteersByCategory?: Array<{ __typename?: 'Volunteer', id: string, name: string, where: string, when: string, description: string, neededPeople: string, category?: Category | null, isDone: boolean, img?: string | null, leader?: { __typename?: 'User', username?: string | null, password?: string | null, email?: string | null, id?: string | null } | null, attendees?: Array<{ __typename?: 'User', username?: string | null, password?: string | null, email?: string | null, id?: string | null } | null> | null } | null> | null };
+
 
 export const GetVolunteersDocument = gql`
     query GetVolunteers {
@@ -423,3 +430,63 @@ export function useMutationMutation(baseOptions?: Apollo.MutationHookOptions<Mut
 export type MutationMutationHookResult = ReturnType<typeof useMutationMutation>;
 export type MutationMutationResult = Apollo.MutationResult<MutationMutation>;
 export type MutationMutationOptions = Apollo.BaseMutationOptions<MutationMutation, MutationMutationVariables>;
+export const GetVolunteersByCategoryDocument = gql`
+    query GetVolunteersByCategory($category: Category!) {
+  getVolunteersByCategory(category: $category) {
+    id
+    name
+    where
+    when
+    description
+    neededPeople
+    category
+    isDone
+    leader {
+      username
+      password
+      email
+      id
+    }
+    attendees {
+      username
+      password
+      email
+      id
+    }
+    img
+  }
+}
+    `;
+
+/**
+ * __useGetVolunteersByCategoryQuery__
+ *
+ * To run a query within a React component, call `useGetVolunteersByCategoryQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetVolunteersByCategoryQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetVolunteersByCategoryQuery({
+ *   variables: {
+ *      category: // value for 'category'
+ *   },
+ * });
+ */
+export function useGetVolunteersByCategoryQuery(baseOptions: Apollo.QueryHookOptions<GetVolunteersByCategoryQuery, GetVolunteersByCategoryQueryVariables> & ({ variables: GetVolunteersByCategoryQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetVolunteersByCategoryQuery, GetVolunteersByCategoryQueryVariables>(GetVolunteersByCategoryDocument, options);
+      }
+export function useGetVolunteersByCategoryLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetVolunteersByCategoryQuery, GetVolunteersByCategoryQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetVolunteersByCategoryQuery, GetVolunteersByCategoryQueryVariables>(GetVolunteersByCategoryDocument, options);
+        }
+export function useGetVolunteersByCategorySuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<GetVolunteersByCategoryQuery, GetVolunteersByCategoryQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetVolunteersByCategoryQuery, GetVolunteersByCategoryQueryVariables>(GetVolunteersByCategoryDocument, options);
+        }
+export type GetVolunteersByCategoryQueryHookResult = ReturnType<typeof useGetVolunteersByCategoryQuery>;
+export type GetVolunteersByCategoryLazyQueryHookResult = ReturnType<typeof useGetVolunteersByCategoryLazyQuery>;
+export type GetVolunteersByCategorySuspenseQueryHookResult = ReturnType<typeof useGetVolunteersByCategorySuspenseQuery>;
+export type GetVolunteersByCategoryQueryResult = Apollo.QueryResult<GetVolunteersByCategoryQuery, GetVolunteersByCategoryQueryVariables>;

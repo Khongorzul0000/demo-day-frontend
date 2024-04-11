@@ -10,12 +10,28 @@ import {
   ImageBackground,
 } from 'react-native';
 
-import slidePic from '@/assets/datas/image';
+import { useGetVolunteersQuery } from '@/graphql/generated';
 import { useUsers } from '@/hooks/useUsers';
 
 export default function TabTwoScreen(): React.ReactNode {
+  const { data } = useGetVolunteersQuery();
   const router = useRouter();
   const { user } = useUsers();
+  // const userId = () => {
+  //   const volunteers = data?.getVolunteers ?? [];
+  //   const userId = user?.id ?? '';
+  //   volunteers.forEach((volunteer) => {
+  //     const leaderId = volunteer?.leader?.id ?? '';
+  //     if (userId && leaderId && userId === leaderId) {
+  //       console.log('Users created volunteer ID:', volunteer?.id);
+  //     }
+  //   });
+  // };
+
+  const userVolunteers = data?.getVolunteers?.filter(
+    (volunteer) => volunteer?.leader?.id === user?.id,
+  );
+  const volLength = userVolunteers?.length;
 
   return (
     <View style={styles.container}>
@@ -54,14 +70,19 @@ export default function TabTwoScreen(): React.ReactNode {
                 </Text>
               </ScrollView>
             </View>
-            <Text style={{ marginTop: 10, fontSize: 20, color: 'white', fontWeight: '600' }}>
-              Duusgasan ajiluud
-            </Text>
+            {volLength !== undefined && (
+              <Text style={{ marginTop: 10, fontSize: 20, color: 'white', fontWeight: '600' }}>
+                Duusgasan ajiluud {volLength}
+              </Text>
+            )}
+            <TouchableOpacity>
+              <Text>id</Text>
+            </TouchableOpacity>
             {/* <Link href="/Login">Login</Link>
             <Link href="/Signup">Signup</Link> */}
             <View style={{ marginBottom: 30, marginTop: 15 }}>
               <FlatList
-                data={slidePic}
+                data={userVolunteers}
                 horizontal
                 contentContainerStyle={{
                   flexGrow: 1,
@@ -72,7 +93,7 @@ export default function TabTwoScreen(): React.ReactNode {
                     <TouchableOpacity
                       style={styles.card}
                       onPress={() => router.push('/detail/VolDetail')}>
-                      <Text style={styles.title}>Lets clear onon river haahahahah</Text>
+                      <Text style={styles.title}>{item?.name}</Text>
                       <View style={styles.slide}>
                         <Text>
                           Volfour бол сайн дурын нийгэмлэгийн зүрх сэтгэл бөгөөд Монгол даяарх сайн
@@ -80,7 +101,7 @@ export default function TabTwoScreen(): React.ReactNode {
                           холбогдуулах хамгийн сайн эх сурвалж юм.
                         </Text>
                       </View>
-                      <Text style={styles.user}> Kelly clarkson</Text>
+                      <Text style={styles.user}>{item?.id}</Text>
                       <Text style={styles.cate}>Cleaning</Text>
                     </TouchableOpacity>
                   );

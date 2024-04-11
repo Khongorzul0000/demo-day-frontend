@@ -1,23 +1,31 @@
-import { FlatList, StyleSheet, Text, View } from 'react-native';
+import { useRouter } from 'expo-router';
+import { useState } from 'react';
+import { FlatList, StyleSheet, Text, View, TextInput, TouchableOpacity } from 'react-native';
 
 import { useGetVolunteersQuery } from '@/graphql/generated';
 
 export default function TabVolunteersScreen(): React.ReactNode {
   const { data, loading, error } = useGetVolunteersQuery();
+  const [searchQuery, setSearchQuery] = useState('');
+  const router = useRouter();
+
+  const filteredVolunteers = data?.getVolunteers?.filter((volunteer) =>
+    volunteer?.name.toLowerCase().includes(searchQuery.toLowerCase()),
+  );
   return (
     <View style={styles.container}>
+      <TextInput
+        style={styles.searchInput}
+        placeholder="Search volunteers"
+        value={searchQuery}
+        onChangeText={setSearchQuery}
+      />
       <View>
         {loading && <Text>Loading...</Text>}
         {error && <Text>Error: {error.message}</Text>}
-        {/* {data?.getVolunteers?.map((vols) => <Text key={vols?.id}>{vols?.name}</Text>)} */}
       </View>
-      <FlatList
-        data={data?.getVolunteers ?? []}
-        renderItem={({ item, index }) => {
-          return (
-            <View style={styles.card}>
-              {/* <Image source={{ uri: item?.img }} style={styles.img} /> */}
-              {/* <Image
+      {/* <Image source={{ uri: item?.img }} style={styles.img} /> */}
+      {/* <Image
                 source={{
                   uri: item?.img
                     ? item.img
@@ -25,11 +33,15 @@ export default function TabVolunteersScreen(): React.ReactNode {
                 }}
                 style={styles.img}
               /> */}
-              <Text style={styles.title}>{item?.name}</Text>
-              <Text style={{ color: 'white' }}>{item?.description}</Text>
-            </View>
-          );
-        }}
+      <FlatList
+        data={filteredVolunteers ?? []}
+        renderItem={({ item, index }) => (
+          <TouchableOpacity style={styles.card} onPress={() => router.push(`/detail/${item?.id}`)}>
+            <Text style={styles.title}>{item?.name}</Text>
+            <Text style={{ color: 'white' }}>{item?.description}</Text>
+          </TouchableOpacity>
+        )}
+        keyExtractor={(item) => item?.id ?? ''}
       />
     </View>
   );
@@ -40,6 +52,7 @@ const styles = StyleSheet.create({
     paddingLeft: 20,
     paddingRight: 20,
     backgroundColor: '#7B68EE',
+    height: '100%',
   },
   title: {
     fontSize: 20,
@@ -58,5 +71,14 @@ const styles = StyleSheet.create({
   img: {
     height: 190,
     borderRadius: 10,
+  },
+  searchInput: {
+    height: 40,
+    borderWidth: 1,
+    borderColor: '#ccc',
+    borderRadius: 5,
+    paddingHorizontal: 10,
+    marginBottom: 20,
+    marginTop: 50,
   },
 });

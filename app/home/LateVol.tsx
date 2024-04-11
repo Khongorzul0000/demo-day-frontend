@@ -19,7 +19,7 @@ export default function TabLateVolScreen(): React.ReactNode {
         {error && <Text>Error: {error.message}</Text>}
       </View>
       <FlatList
-        data={[...(data?.getVolunteers ?? [])]}
+        data={[...(data?.getVolunteers ?? [])].reverse().slice(0, 3)}
         horizontal
         contentContainerStyle={{
           flexGrow: 1,

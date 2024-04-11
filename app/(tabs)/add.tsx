@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { StyleSheet, TextInput, TouchableOpacity, View, Text } from 'react-native';
 import { SelectList } from 'react-native-dropdown-select-list';
 
-import { Category, useCreateVolunteerMutation } from '@/graphql/generated';
+import { Category, useCreateVolunteerMutation, useGetVolunteersQuery } from '@/graphql/generated';
 import { useUsers } from '@/hooks/useUsers';
 
 export default function TabThreeScreen(): React.ReactNode {
@@ -17,6 +17,7 @@ export default function TabThreeScreen(): React.ReactNode {
   const [img, setImg] = useState('');
   const [isDone, setIsDone] = useState(false);
   const { user } = useUsers();
+  const { refetch } = useGetVolunteersQuery();
   const [createVolunteer, { loading: mutationLoading }] = useCreateVolunteerMutation();
   const handleCreate = () => {
     console.log('createingvolunteer');
@@ -35,21 +36,17 @@ export default function TabThreeScreen(): React.ReactNode {
           leaderId: `${user?.id}`,
         },
       },
-      onCompleted: (data) => {
+      onCompleted: () => {
         console.log('Volunteer created successfully!');
-        // refresh();
+        refetch();
       },
       onError: (error) => {
         console.error('Error creating volunteer:', error);
       },
     });
-    // const refresh = () => {
-    //   console.log('Refreshing data...');
-    //   refresh();
-    // };
   };
   useEffect(() => {
-    setIsDone((prevIsDone) => !prevIsDone); // Toggle the value of isDone
+    setIsDone((prevIsDone) => !prevIsDone);
   }, []);
 
   // const pickImage = async () => {

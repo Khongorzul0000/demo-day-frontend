@@ -1,12 +1,12 @@
-import { StyleSheet, Text, View, FlatList, Image } from 'react-native';
-
-import catPic from '../../assets/datas/cate';
+import { useRouter } from 'expo-router';
+import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
 
 export default function TabCategoryScreen(): React.ReactNode {
+  const router = useRouter();
   return (
     <View style={styles.container}>
       <Text style={styles.heading}>Categories</Text>
-      <FlatList
+      {/* <FlatList
         data={catPic}
         horizontal
         ItemSeparatorComponent={() => <View style={{ width: 30.3 }} />}
@@ -20,7 +20,53 @@ export default function TabCategoryScreen(): React.ReactNode {
             </View>
           );
         }}
-      />
+      /> */}
+      <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+        <TouchableOpacity
+          style={{ alignItems: 'center' }}
+          onPress={() => router.push('/categoryScreens/Animal')}>
+          <View style={styles.round}>
+            <Image
+              source={{ uri: 'https://cdn-icons-png.flaticon.com/128/4600/4600227.png' }}
+              style={styles.slide}
+            />
+          </View>
+          <Text style={{ fontWeight: '600', marginTop: 5 }}>Animal</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={{ alignItems: 'center' }}
+          onPress={() => router.push('/categoryScreens/Nature')}>
+          <View style={styles.round}>
+            <Image
+              source={{ uri: 'https://cdn-icons-png.flaticon.com/128/2913/2913483.png' }}
+              style={styles.slide}
+            />
+          </View>
+          <Text style={{ fontWeight: '600', marginTop: 5 }}>Nature</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={{ alignItems: 'center' }}
+          onPress={() => router.push('/categoryScreens/Cleaning')}>
+          <View style={styles.round}>
+            <Image
+              source={{ uri: 'https://cdn-icons-png.flaticon.com/128/994/994928.png' }}
+              style={styles.slide}
+            />
+          </View>
+          <Text style={{ fontWeight: '600', marginTop: 5 }}>Cleaning</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={{ alignItems: 'center' }}
+          onPress={() => router.push('/categoryScreens/Education')}>
+          <View style={styles.round}>
+            <Image
+              source={{ uri: 'https://cdn-icons-png.flaticon.com/128/4207/4207253.png' }}
+              style={styles.slide}
+            />
+          </View>
+          <Text style={{ fontWeight: '600', marginTop: 5 }}>Education</Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 }
