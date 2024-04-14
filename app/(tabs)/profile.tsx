@@ -52,6 +52,13 @@ export default function TabTwoScreen(): React.ReactNode {
           />
         </View>
         <View style={styles.content}>
+          {/* <TouchableOpacity
+            onPress={() => {
+              console.log('Logout button pressed');
+              useUsers.getState().logout();
+            }}>
+            <Text>log</Text>
+          </TouchableOpacity> */}
           <Text style={{ fontWeight: '600', fontSize: 17 }}>{user?.username}</Text>
           <Text style={{ marginBottom: 20, marginTop: 5 }}>{user?.email}</Text>
           <ScrollView>

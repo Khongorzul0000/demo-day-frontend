@@ -21,6 +21,7 @@ import { User } from '@/graphql/generated';
 type UseUserStore = {
   user: User | null;
   setUser: (prevState: User | null) => void;
+  logout: () => Promise<void>;
 };
 
 export const useUsers = create<UseUserStore>((set) => ({
@@ -31,6 +32,14 @@ export const useUsers = create<UseUserStore>((set) => ({
       await AsyncStorage.setItem('userData', JSON.stringify(prevState));
     } catch (error) {
       console.error('Error saving user data:', error);
+    }
+  },
+  logout: async () => {
+    try {
+      await AsyncStorage.removeItem('userData');
+      set({ user: null });
+    } catch (error) {
+      console.error('Error logging out:', error);
     }
   },
 }));

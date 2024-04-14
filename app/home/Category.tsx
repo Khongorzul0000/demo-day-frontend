@@ -1,4 +1,4 @@
-import { useRouter } from 'expo-router';
+import { Link, useRouter } from 'expo-router';
 import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
 
 export default function TabCategoryScreen(): React.ReactNode {
@@ -21,6 +21,9 @@ export default function TabCategoryScreen(): React.ReactNode {
           );
         }}
       /> */}
+      <Link href="/Login" style={{ textDecorationLine: 'underline' }}>
+        Login
+      </Link>
       <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
         <TouchableOpacity
           style={{ alignItems: 'center' }}
